@@ -118,7 +118,7 @@ m_scca = scca(Xt, Yt; K = 3, penaltyx = 0.5, penaltyz = 0.5)
 println("scca     : nonzeros in u = ", [count(!iszero, m_scca.u[:, k]) for k in 1:m_scca.K],
         " of ", size(m_scca.u, 1))
 display(plot_loadings(m_scca.u;
-                      comp = 2, nonzero = false, loadingsstyle = :sticks,
+                      comp = 1, nonzero = true, loadingsstyle = :sticks,
                       ylabel = "Loading on X-variate 1 (r=$(round(m_scca.cors[1], digits = 2)))",
                       title = "sparse CCA, X side"))
 

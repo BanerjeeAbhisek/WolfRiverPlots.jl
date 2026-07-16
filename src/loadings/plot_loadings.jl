@@ -4,17 +4,17 @@ model of BigRiverEssence stores one, already held as variables (rows) by compone
 (columns), so unlike the scores none of them need transposing here:
 
     pca       plot_loadings(m.loadings; ntop = 20)
-    spc       plot_loadings(m.loadings; nonzero = true, style = :sticks)
-    pmd       plot_loadings(m.v; nonzero = true, style = :sticks)
+    spc       plot_loadings(m.loadings; nonzero = true, loadingsstyle = :sticks)
+    pmd       plot_loadings(m.v; nonzero = true, loadingsstyle = :sticks)
     plskern   plot_loadings(m.P; ntop = 20)
     plsda     plot_loadings(m.loadings_X; ntop = 20)
-    splsda    plot_loadings(m.loadings_X; nonzero = true, style = :sticks)
+    splsda    plot_loadings(m.loadings_X; nonzero = true, loadingsstyle = :sticks)
     cca       plot_loadings(m.xproj)
-    scca      plot_loadings(m.u; nonzero = true, style = :sticks)
+    scca      plot_loadings(m.u; nonzero = true, loadingsstyle = :sticks)
     jive      plot_loadings(m.U[i])
 
 The models with an L1 penalty (spc, pmd, splsda, scca) are given `nonzero = true`,
-since most of their loadings sit exactly at zero, and `style = :sticks`, since a stem
+since most of their loadings sit exactly at zero, and `loadingsstyle = :sticks`, since a stem
 reads sparsity better than a bar. The dense models are given `ntop` instead, to keep
 the variable axis legible.
 

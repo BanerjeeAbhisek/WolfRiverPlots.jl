@@ -16,7 +16,7 @@
 @recipe function f(h::LoadingsPlot;
 	origincolor = "#737373",
 	loadingscolor = "#4292c6",
-	style = :bar)
+	loadingsstyle = :bar)
 	# check types of the input arguments
 	if length(h.args) != 3 || !(typeof(h.args[1]) <: AbstractVector) ||
 	   !(typeof(h.args[2]) <: AbstractVector) || !(typeof(h.args[3]) <: AbstractVector)
@@ -89,7 +89,7 @@
 	# Loadings values #
 	###################
 	@series begin
-		seriestype := style
+		seriestype := loadingsstyle
 		markershape --> :circle
 		markersize --> 3
 
