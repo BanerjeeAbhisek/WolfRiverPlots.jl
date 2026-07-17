@@ -44,4 +44,14 @@ module WolfRiverPlots
     include("./loadings_heatmap/plot_loadings_heatmap.jl");
     export plot_loadings_heatmap, plot_loadings_heatmap!
 
+    # pairs functions
+    include("./pairs/pairs_helpers.jl");
+    export get_pairs_coords
+
+    include("./pairs/pairs_recipe.jl");
+    export pairsplot, pairsplot!, PairsPlot
+
+    include("./pairs/plot_pairs.jl");
+    export plot_pairs, plot_pairs!
+
 end # module WolfRiverPlots
