@@ -34,4 +34,14 @@ module WolfRiverPlots
     include("./loadings/plot_loadings.jl");
     export plot_loadings, plot_loadings!
 
+    # loadings heatmap functions
+    include("./loadings_heatmap/loadings_heatmap_helpers.jl");
+    export get_loadings_heatmap_coords
+
+    include("./loadings_heatmap/loadings_heatmap_recipe.jl");
+    export loadingsheatmapplot, loadingsheatmapplot!, LoadingsHeatmapPlot
+
+    include("./loadings_heatmap/plot_loadings_heatmap.jl");
+    export plot_loadings_heatmap, plot_loadings_heatmap!
+
 end # module WolfRiverPlots
