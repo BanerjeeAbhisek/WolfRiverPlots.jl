@@ -84,4 +84,14 @@ module WolfRiverPlots
     include("./vip/plot_vip.jl");
     export plot_vip, plot_vip!
 
+    # sparsity functions
+    include("./sparsity/sparsity_helpers.jl");
+    export get_sparsity_coords
+
+    include("./sparsity/sparsity_recipe.jl");
+    export sparsityplot, sparsityplot!, SparsityPlot
+
+    include("./sparsity/plot_sparsity.jl");
+    export plot_sparsity, plot_sparsity!
+
 end # module WolfRiverPlots
