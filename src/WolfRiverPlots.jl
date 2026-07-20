@@ -1,6 +1,6 @@
 module WolfRiverPlots
     # dependent packages 
-    using DataFrames, Statistics
+    using DataFrames, Statistics, LinearAlgebra
     using RecipesBase
 
     # utils functions
@@ -53,5 +53,15 @@ module WolfRiverPlots
 
     include("./pairs/plot_pairs.jl");
     export plot_pairs, plot_pairs!
+
+    # biplot functions
+    include("./biplot/biplot_helpers.jl");
+    export get_biplot_coords, get_ellipse_coords
+
+    include("./biplot/biplot_recipe.jl");
+    export biplot, biplot!, BiPlot
+
+    include("./biplot/plot_biplot.jl");
+    export plot_biplot, plot_biplot!
 
 end # module WolfRiverPlots
