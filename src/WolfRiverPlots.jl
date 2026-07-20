@@ -64,4 +64,14 @@ module WolfRiverPlots
     include("./biplot/plot_biplot.jl");
     export plot_biplot, plot_biplot!
 
+    # scree functions
+    include("./scree/scree_helpers.jl");
+    export get_scree_coords
+
+    include("./scree/scree_recipe.jl");
+    export screeplot, screeplot!, ScreePlot
+
+    include("./scree/plot_scree.jl");
+    export plot_scree, plot_scree!
+
 end # module WolfRiverPlots
