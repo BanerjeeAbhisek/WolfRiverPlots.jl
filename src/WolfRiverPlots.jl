@@ -94,4 +94,24 @@ module WolfRiverPlots
     include("./sparsity/plot_sparsity.jl");
     export plot_sparsity, plot_sparsity!
 
+    # predict observations functions
+    include("./predict_observations/predict_observations_helpers.jl");
+    export get_predict_observations_coords
+
+    include("./predict_observations/predict_observations_recipe.jl");
+    export predictobsplot, predictobsplot!, PredictObsPlot
+
+    include("./predict_observations/plot_predict_observations.jl");
+    export plot_predict_observations, plot_predict_observations!
+
+    # jive variance functions
+    include("./jive_variance/jive_variance_helpers.jl");
+    export get_jive_variance_coords
+
+    include("./jive_variance/jive_variance_recipe.jl");
+    export jivevarianceplot, jivevarianceplot!, JiveVariancePlot
+
+    include("./jive_variance/plot_jive_variance.jl");
+    export plot_jive_variance, plot_jive_variance!
+
 end # module WolfRiverPlots
