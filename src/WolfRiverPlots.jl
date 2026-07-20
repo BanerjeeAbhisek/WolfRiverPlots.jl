@@ -74,4 +74,14 @@ module WolfRiverPlots
     include("./scree/plot_scree.jl");
     export plot_scree, plot_scree!
 
+     # vip functions
+    include("./vip/vip_helpers.jl");
+    export get_vip_coords
+
+    include("./vip/vip_recipe.jl");
+    export vipplot, vipplot!, VipPlot
+
+    include("./vip/plot_vip.jl");
+    export plot_vip, plot_vip!
+
 end # module WolfRiverPlots
