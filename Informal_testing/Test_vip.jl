@@ -46,7 +46,7 @@ display(plot_vip(V_plsda;
                  title = "PLS-DA, Variable Importance in Projection"))
 
 
-display(plot_vip(V_plsda;
+display(plot_vip(V_plsda; comp=3,
                  # --- the threshold line ---
                  threshold = 1.2,              # shift it off 1.0
                  thresholdcolor = :yellow,       # its color
