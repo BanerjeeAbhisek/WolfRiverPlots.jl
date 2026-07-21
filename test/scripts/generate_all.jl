@@ -16,7 +16,7 @@ include("generate_biplot.jl")
 include("generate_scree.jl")
 include("generate_vip.jl")
 include("generate_sparsity.jl")
-# include("generate_predict_observations.jl")
-# include("generate_jive_variance.jl")
+include("generate_predict_observations.jl")
+include("generate_jive_variance.jl")
 
 @info "done"

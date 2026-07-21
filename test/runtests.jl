@@ -38,8 +38,8 @@ ENV["GKSwstype"] = "nul"
     include("scree_helpers_tests.jl")
     include("vip_helpers_tests.jl")
     include("sparsity_helpers_tests.jl")
-    # include("predict_observations_helpers_tests.jl")
-    # include("jive_variance_helpers_tests.jl")
+    include("predict_observations_helpers_tests.jl")
+    include("jive_variance_helpers_tests.jl")
 
     #########
     # plots #
@@ -53,7 +53,7 @@ ENV["GKSwstype"] = "nul"
     include("scree_tests.jl")
     include("vip_tests.jl")
     include("sparsity_tests.jl")
-    # include("predict_observations_tests.jl")
-    # include("jive_variance_tests.jl")
+    include("predict_observations_tests.jl")
+    include("jive_variance_tests.jl")
 
 end
