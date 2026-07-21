@@ -3,15 +3,15 @@ plot_loadings_heatmap takes a matrix of loadings, so it is not tied to any one m
 Every model of BigRiverEssence stores one, already held as variables (rows) by
 components (columns), so none of them need transposing here:
 
-    pca       plot_loadings_heatmap(m.loadings; ntop = 30)
-    spc       plot_loadings_heatmap(m.loadings; nonzero = true)
-    pmd       plot_loadings_heatmap(m.v; nonzero = true)
-    plskern   plot_loadings_heatmap(m.P; ntop = 30)
-    plsda     plot_loadings_heatmap(m.loadings_X; ntop = 30)
-    splsda    plot_loadings_heatmap(m.loadings_X; nonzero = true)
-    cca       plot_loadings_heatmap(m.xproj)
-    scca      plot_loadings_heatmap(m.u; nonzero = true)
-    jive      plot_loadings_heatmap(m.U[i])
+	pca       plot_loadings_heatmap(m.loadings; ntop = 30)
+	spc       plot_loadings_heatmap(m.loadings; nonzero = true)
+	pmd       plot_loadings_heatmap(m.v; nonzero = true)
+	plskern   plot_loadings_heatmap(m.P; ntop = 30)
+	plsda     plot_loadings_heatmap(m.loadings_X; ntop = 30)
+	splsda    plot_loadings_heatmap(m.loadings_X; nonzero = true)
+	cca       plot_loadings_heatmap(m.xproj)
+	scca      plot_loadings_heatmap(m.u; nonzero = true)
+	jive      plot_loadings_heatmap(m.U[i])
 
 The models with an L1 penalty (spc, pmd, splsda, scca) are given `nonzero = true`,
 since most of their rows are zero on every component and leave the map a flat field of
@@ -27,15 +27,15 @@ The Y side of the two block models is drawn the same way, from `m.loadings_Y`,
 Everything else is a plot attribute, so it is passed straight to the plot and needs no
 argument of its own:
 
-    plot_loadings_heatmap(m.loadings; ntop = 30, title = "PCA loadings")
+	plot_loadings_heatmap(m.loadings; ntop = 30, title = "PCA loadings")
 
 =#
 
 
 """
 plot_loadings_heatmap(loadings::Matrix{Float64}; comps::Vector{Int} = Int[],
-                      varnames::Vector{String} = String[], compnames::Vector{String} = String[],
-                      nonzero::Bool = false, ntop::Int = 0, kwargs...)
+					  varnames::Vector{String} = String[], compnames::Vector{String} = String[],
+					  nonzero::Bool = false, ntop::Int = 0, kwargs...)
 Generates a heatmap of the variable loadings of every component of a fitted model.
 ## Arguments
 - `loadings` is the matrix of loadings, variables (rows) by components (columns).
@@ -52,22 +52,22 @@ Generates a heatmap of the variable loadings of every component of a fitted mode
   variables.
 """
 function plot_loadings_heatmap(loadings::Matrix{Float64}; comps::Vector{Int} = Int[],
-                               varnames::Vector{String} = String[],
-                               compnames::Vector{String} = String[],
-                               nonzero::Bool = false, ntop::Int = 0, kwargs...)
-    # get coordinates ready for plotting
-    z, xnames, ynames = get_loadings_heatmap_coords(loadings; comps = comps,
-                                                    varnames = varnames,
-                                                    compnames = compnames,
-                                                    nonzero = nonzero, ntop = ntop)
-    loadingsheatmapplot(z, xnames, ynames; kwargs...)
+	varnames::Vector{String} = String[],
+	compnames::Vector{String} = String[],
+	nonzero::Bool = false, ntop::Int = 0, kwargs...)
+	# get coordinates ready for plotting
+	z, xnames, ynames = get_loadings_heatmap_coords(loadings; comps = comps,
+		varnames = varnames,
+		compnames = compnames,
+		nonzero = nonzero, ntop = ntop)
+	loadingsheatmapplot(z, xnames, ynames; kwargs...)
 end
 
 
 """
 plot_loadings_heatmap!(loadings::Matrix{Float64}; comps::Vector{Int} = Int[],
-                       varnames::Vector{String} = String[], compnames::Vector{String} = String[],
-                       nonzero::Bool = false, ntop::Int = 0, kwargs...)
+					   varnames::Vector{String} = String[], compnames::Vector{String} = String[],
+					   nonzero::Bool = false, ntop::Int = 0, kwargs...)
 Adds a heatmap of the variable loadings of every component of a fitted model to the current plot.
 ## Arguments
 - `loadings` is the matrix of loadings, variables (rows) by components (columns).
@@ -84,13 +84,13 @@ Adds a heatmap of the variable loadings of every component of a fitted model to 
   variables.
 """
 function plot_loadings_heatmap!(loadings::Matrix{Float64}; comps::Vector{Int} = Int[],
-                                varnames::Vector{String} = String[],
-                                compnames::Vector{String} = String[],
-                                nonzero::Bool = false, ntop::Int = 0, kwargs...)
-    # get coordinates ready for plotting
-    z, xnames, ynames = get_loadings_heatmap_coords(loadings; comps = comps,
-                                                    varnames = varnames,
-                                                    compnames = compnames,
-                                                    nonzero = nonzero, ntop = ntop)
-    loadingsheatmapplot!(z, xnames, ynames; kwargs...)
+	varnames::Vector{String} = String[],
+	compnames::Vector{String} = String[],
+	nonzero::Bool = false, ntop::Int = 0, kwargs...)
+	# get coordinates ready for plotting
+	z, xnames, ynames = get_loadings_heatmap_coords(loadings; comps = comps,
+		varnames = varnames,
+		compnames = compnames,
+		nonzero = nonzero, ntop = ntop)
+	loadingsheatmapplot!(z, xnames, ynames; kwargs...)
 end

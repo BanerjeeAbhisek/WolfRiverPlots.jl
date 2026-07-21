@@ -1,15 +1,15 @@
 #=
 List of the sparsity helpers functions
 - get_sparsity_coords
-    Returns the count of selected variables per component of a loading matrix, ready
-    for plotting, together with the names of the components they belong to.
+	Returns the count of selected variables per component of a loading matrix, ready
+	for plotting, together with the names of the components they belong to.
 
 =#
 
 
 """
 get_sparsity_coords(loadings::Matrix{Float64}; comps::Vector{Int} = Int[], ncomp::Int = 0,
-                    compnames::Vector{String} = String[], asfraction::Bool = false) =>
+					compnames::Vector{String} = String[], asfraction::Bool = false) =>
 
 Returns the count of selected variables per component of a loading matrix, ready for
 plotting, together with the names of the components they belong to.
@@ -42,51 +42,51 @@ plotting, together with the names of the components they belong to.
 
 """
 function get_sparsity_coords(loadings::Matrix{Float64}; comps::Vector{Int} = Int[],
-                             ncomp::Int = 0, compnames::Vector{String} = String[],
-                             asfraction::Bool = false)
+	ncomp::Int = 0, compnames::Vector{String} = String[],
+	asfraction::Bool = false)
 
-    p, ntotal = size(loadings)
+	p, ntotal = size(loadings)
 
-    # check that a name was given for every component, when any were given
-    if !isempty(compnames) && length(compnames) != ntotal
-        error("Sparsity compnames should be given one per component.  Got: $(length(compnames)) for $(ntotal)")
-    end
+	# check that a name was given for every component, when any were given
+	if !isempty(compnames) && length(compnames) != ntotal
+		error("Sparsity compnames should be given one per component.  Got: $(length(compnames)) for $(ntotal)")
+	end
 
-    #######################
-    # Components to keep  #
-    #######################
+	#######################
+	# Components to keep  #
+	#######################
 
-    # comps names an explicit set, ncomp keeps the leading count, else every component
-    if !isempty(comps)
-        for j in comps
-            check_comps(j, ntotal)
-        end
-        jdx = comps
-    elseif ncomp > 0 && ncomp < ntotal
-        jdx = collect(1:ncomp)
-    else
-        jdx = collect(1:ntotal)
-    end
+	# comps names an explicit set, ncomp keeps the leading count, else every component
+	if !isempty(comps)
+		for j in comps
+			check_comps(j, ntotal)
+		end
+		jdx = comps
+	elseif ncomp > 0 && ncomp < ntotal
+		jdx = collect(1:ncomp)
+	else
+		jdx = collect(1:ntotal)
+	end
 
-    x = collect(1:length(jdx))
+	x = collect(1:length(jdx))
 
-    #############
-    # Counting  #
-    #############
+	#############
+	# Counting  #
+	#############
 
-    # a variable is selected on a component when its loading there is not zero
-    counts = [count(!iszero, view(loadings, :, j)) for j in jdx]
+	# a variable is selected on a component when its loading there is not zero
+	counts = [count(!iszero, view(loadings, :, j)) for j in jdx]
 
-    # the fraction reads more easily than the count over many variables, since it does
-    # not depend on knowing p
-    y = asfraction ? counts ./ p : Float64.(counts)
+	# the fraction reads more easily than the count over many variables, since it does
+	# not depend on knowing p
+	y = asfraction ? counts ./ p : Float64.(counts)
 
-    # the components are named by their index when no names were given
-    if isempty(compnames)
-        names = ["$(j)" for j in jdx]
-    else
-        names = compnames[jdx]
-    end
+	# the components are named by their index when no names were given
+	if isempty(compnames)
+		names = ["$(j)" for j in jdx]
+	else
+		names = compnames[jdx]
+	end
 
-    return x, y, names
+	return x, y, names
 end

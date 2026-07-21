@@ -10,11 +10,11 @@ individual variation. The blocks must be SCALED the way `jive` scales them inter
 row-centered and then Frobenius-normalized so that no block dominates, since the fitted
 `J` and `A` are on that scale and the fractions are meaningless against the raw blocks:
 
-    nel = [size(X, 1) * size(X, 2) for X in Xs]; sum_n = sum(nel)
-    Dat = [ let Xi = X .- mean(X, dims = 2); Xi ./ (norm(Xi) * sqrt(sum_n)); end
-            for X in Xs ]
+	nel = [size(X, 1) * size(X, 2) for X in Xs]; sum_n = sum(nel)
+	Dat = [ let Xi = X .- mean(X, dims = 2); Xi ./ (norm(Xi) * sqrt(sum_n)); end
+			for X in Xs ]
 
-    jive      plot_jive_variance(Dat, m.J, m.A)
+	jive      plot_jive_variance(Dat, m.J, m.A)
 
 where `Xs` is the vector of raw blocks, `Dat` their scaled form, `m.J` the joint structure
 and `m.A` the individual structure. The blocks are needed because the fractions are
@@ -25,15 +25,15 @@ separate no joint from individual variation, so this plot is JIVE's alone.
 
 Everything else is a plot attribute, so it is passed straight to the plot:
 
-    plot_jive_variance(Dat, m.J, m.A; blocknames = ["genes", "proteins"],
-                       title = "Variation Explained")
+	plot_jive_variance(Dat, m.J, m.A; blocknames = ["genes", "proteins"],
+					   title = "Variation Explained")
 
 =#
 
 
 """
 plot_jive_variance(blocks::Vector{Matrix{Float64}}, joint::Vector{Matrix{Float64}},
-                   individual::Vector{Matrix{Float64}}; blocknames::Vector{String} = String[], kwargs...)
+				   individual::Vector{Matrix{Float64}}; blocknames::Vector{String} = String[], kwargs...)
 Generates a stacked bar plot of the joint, individual, and residual variation of each block of a JIVE model.
 ## Arguments
 - `blocks` is the vector of raw data blocks the model was fitted on, one matrix per
@@ -44,18 +44,18 @@ Generates a stacked bar plot of the joint, individual, and residual variation of
   the blocks are named by their index.
 """
 function plot_jive_variance(blocks::Vector{Matrix{Float64}}, joint::Vector{Matrix{Float64}},
-                            individual::Vector{Matrix{Float64}};
-                            blocknames::Vector{String} = String[], kwargs...)
-    # get coordinates ready for plotting
-    varJ, varI, varR, names = get_jive_variance_coords(blocks, joint, individual;
-                                                       blocknames = blocknames)
-    jivevarianceplot(varJ, varI, varR, names; kwargs...)
+	individual::Vector{Matrix{Float64}};
+	blocknames::Vector{String} = String[], kwargs...)
+	# get coordinates ready for plotting
+	varJ, varI, varR, names = get_jive_variance_coords(blocks, joint, individual;
+		blocknames = blocknames)
+	jivevarianceplot(varJ, varI, varR, names; kwargs...)
 end
 
 
 """
 plot_jive_variance!(blocks::Vector{Matrix{Float64}}, joint::Vector{Matrix{Float64}},
-                    individual::Vector{Matrix{Float64}}; blocknames::Vector{String} = String[], kwargs...)
+					individual::Vector{Matrix{Float64}}; blocknames::Vector{String} = String[], kwargs...)
 Adds a stacked bar plot of the joint, individual, and residual variation of each block of a JIVE model to the current plot.
 ## Arguments
 - `blocks` is the vector of raw data blocks the model was fitted on, one matrix per
@@ -66,10 +66,10 @@ Adds a stacked bar plot of the joint, individual, and residual variation of each
   the blocks are named by their index.
 """
 function plot_jive_variance!(blocks::Vector{Matrix{Float64}}, joint::Vector{Matrix{Float64}},
-                             individual::Vector{Matrix{Float64}};
-                             blocknames::Vector{String} = String[], kwargs...)
-    # get coordinates ready for plotting
-    varJ, varI, varR, names = get_jive_variance_coords(blocks, joint, individual;
-                                                       blocknames = blocknames)
-    jivevarianceplot!(varJ, varI, varR, names; kwargs...)
+	individual::Vector{Matrix{Float64}};
+	blocknames::Vector{String} = String[], kwargs...)
+	# get coordinates ready for plotting
+	varJ, varI, varR, names = get_jive_variance_coords(blocks, joint, individual;
+		blocknames = blocknames)
+	jivevarianceplot!(varJ, varI, varR, names; kwargs...)
 end

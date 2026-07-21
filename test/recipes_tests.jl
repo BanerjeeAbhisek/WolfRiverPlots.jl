@@ -3,9 +3,9 @@
 ########
 
 x = randn(7)
-y = ["NA","DO", "ZC", "UX", "MK", "XQ", "YN"]
+y = ["NA", "DO", "ZC", "UX", "MK", "XQ", "YN"]
 
-ε = rand(Uniform(0.1,2), 7)
+ε = rand(Uniform(0.1, 2), 7)
 
 ##########################
 # Test Confidence Recipe #

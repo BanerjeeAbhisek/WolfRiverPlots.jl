@@ -1,15 +1,15 @@
 #=
 List of the scree helpers functions
 - get_scree_coords
-    Returns the per component values of a fitted model, ready for plotting as a scree,
-    together with the names of the components they belong to.
+	Returns the per component values of a fitted model, ready for plotting as a scree,
+	together with the names of the components they belong to.
 
 =#
 
 
 """
 get_scree_coords(values::AbstractVector; ncomp::Int = 0,
-                 compnames::Vector{String} = String[], cumulative::Bool = false) =>
+				 compnames::Vector{String} = String[], cumulative::Bool = false) =>
 
 Returns the per component values of a fitted model, ready for plotting as a scree,
 together with the names of the components they belong to.
@@ -38,36 +38,36 @@ together with the names of the components they belong to.
 
 """
 function get_scree_coords(values::AbstractVector; ncomp::Int = 0,
-                          compnames::Vector{String} = String[], cumulative::Bool = false)
+	compnames::Vector{String} = String[], cumulative::Bool = false)
 
-    n = length(values)
+	n = length(values)
 
-    # check that a name was given for every component, when any were given
-    if !isempty(compnames) && length(compnames) != n
-        error("Scree compnames should be given one per component.  Got: $(length(compnames)) for $(n)")
-    end
+	# check that a name was given for every component, when any were given
+	if !isempty(compnames) && length(compnames) != n
+		error("Scree compnames should be given one per component.  Got: $(length(compnames)) for $(n)")
+	end
 
-    #######################
-    # Components to keep  #
-    #######################
+	#######################
+	# Components to keep  #
+	#######################
 
-    # every component is kept when none were asked for, else the leading ncomp of them
-    keep = (ncomp > 0 && ncomp < n) ? ncomp : n
+	# every component is kept when none were asked for, else the leading ncomp of them
+	keep = (ncomp > 0 && ncomp < n) ? ncomp : n
 
-    jdx = collect(1:keep)
+	jdx = collect(1:keep)
 
-    x = collect(1:keep)
+	x = collect(1:keep)
 
-    # the running total is taken over the components kept, so a truncated scree still
-    # reads its cumulative curve up to the last component shown
-    y = cumulative ? cumsum(values[jdx]) : collect(values[jdx])
+	# the running total is taken over the components kept, so a truncated scree still
+	# reads its cumulative curve up to the last component shown
+	y = cumulative ? cumsum(values[jdx]) : collect(values[jdx])
 
-    # the components are named by their index when no names were given
-    if isempty(compnames)
-        names = ["$(j)" for j in jdx]
-    else
-        names = compnames[jdx]
-    end
+	# the components are named by their index when no names were given
+	if isempty(compnames)
+		names = ["$(j)" for j in jdx]
+	else
+		names = compnames[jdx]
+	end
 
-    return x, y, names
+	return x, y, names
 end

@@ -8,8 +8,8 @@ a curve, and the number of important variables is where the curve crosses the li
 The VIP is defined for the discriminant models alone, and is read off the `vip`
 function of BigRiverEssence:
 
-    plsda     plot_vip(vip(m))
-    splsda    plot_vip(vip(m))
+	plsda     plot_vip(vip(m))
+	splsda    plot_vip(vip(m))
 
 `vip` returns a matrix of variables by components, cumulative through the components, so
 its last column is the overall importance and is the one plotted by default. An earlier
@@ -21,14 +21,14 @@ read from the loadings plot instead.
 Everything else is a plot attribute, so it is passed straight to the plot. The x-axis
 can be named for the number of components, as the model reports it:
 
-    plot_vip(vip(m); xlabel = "VIP ($(m.ncomp) axes)", title = "Variable Importance in Projection")
+	plot_vip(vip(m); xlabel = "VIP ($(m.ncomp) axes)", title = "Variable Importance in Projection")
 
 =#
 
 
 """
 plot_vip(vips::Matrix{Float64}; comp::Int = 0, varnames::Vector{String} = String[],
-         above::Bool = false, ntop::Int = 0, kwargs...)
+		 above::Bool = false, ntop::Int = 0, kwargs...)
 Generates a horizontal bar plot of the Variable Importance in Projection of a discriminant model, sorted, with a threshold line at one.
 ## Arguments
 - `vips` is the matrix of VIP scores, variables (rows) by components (columns), as
@@ -44,17 +44,17 @@ Generates a horizontal bar plot of the Variable Importance in Projection of a di
 - `ntop` keeps only the `ntop` variables of largest VIP, default is `0` for all of them.
 """
 function plot_vip(vips::Matrix{Float64}; comp::Int = 0, varnames::Vector{String} = String[],
-                  above::Bool = false, ntop::Int = 0, kwargs...)
-    # get coordinates ready for plotting
-    x, y, names = get_vip_coords(vips; comp = comp, varnames = varnames, above = above,
-                                 ntop = ntop)
-    vipplot(x, y, names; kwargs...)
+	above::Bool = false, ntop::Int = 0, kwargs...)
+	# get coordinates ready for plotting
+	x, y, names = get_vip_coords(vips; comp = comp, varnames = varnames, above = above,
+		ntop = ntop)
+	vipplot(x, y, names; kwargs...)
 end
 
 
 """
 plot_vip!(vips::Matrix{Float64}; comp::Int = 0, varnames::Vector{String} = String[],
-          above::Bool = false, ntop::Int = 0, kwargs...)
+		  above::Bool = false, ntop::Int = 0, kwargs...)
 Adds a horizontal bar plot of the Variable Importance in Projection of a discriminant model to the current plot.
 ## Arguments
 - `vips` is the matrix of VIP scores, variables (rows) by components (columns), as
@@ -70,9 +70,9 @@ Adds a horizontal bar plot of the Variable Importance in Projection of a discrim
 - `ntop` keeps only the `ntop` variables of largest VIP, default is `0` for all of them.
 """
 function plot_vip!(vips::Matrix{Float64}; comp::Int = 0, varnames::Vector{String} = String[],
-                   above::Bool = false, ntop::Int = 0, kwargs...)
-    # get coordinates ready for plotting
-    x, y, names = get_vip_coords(vips; comp = comp, varnames = varnames, above = above,
-                                 ntop = ntop)
-    vipplot!(x, y, names; kwargs...)
+	above::Bool = false, ntop::Int = 0, kwargs...)
+	# get coordinates ready for plotting
+	x, y, names = get_vip_coords(vips; comp = comp, varnames = varnames, above = above,
+		ntop = ntop)
+	vipplot!(x, y, names; kwargs...)
 end

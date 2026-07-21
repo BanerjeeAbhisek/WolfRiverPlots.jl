@@ -8,15 +8,15 @@ says WHICH VARIABLES DRIVE WHICH SAMPLES.
 Every model of BigRiverEssence stores both, though the scores of some need a projection
 or a transposition while the loadings never do:
 
-    pca       plot_biplot(pca_transform(m, X), m.loadings; ntop = 10)
-    spc       plot_biplot(((X .- m.mean') ./ m.scale') * m.loadings, m.loadings; nonzero = true)
-    pmd       plot_biplot(m.u, m.v; nonzero = true)
-    plskern   plot_biplot(m.T, m.P; ntop = 10)
-    plsda     plot_biplot(m.variates_X, m.loadings_X; group = y, ntop = 10)
-    splsda    plot_biplot(m.variates_X, m.loadings_X; group = y, nonzero = true)
-    cca       plot_biplot(permutedims(cca_transform(m, Z, :x)), m.xproj)
-    scca      plot_biplot(permutedims(Z) * m.u, m.u; nonzero = true)
-    jive      plot_biplot(permutedims(m.S), m.U[i])
+	pca       plot_biplot(pca_transform(m, X), m.loadings; ntop = 10)
+	spc       plot_biplot(((X .- m.mean') ./ m.scale') * m.loadings, m.loadings; nonzero = true)
+	pmd       plot_biplot(m.u, m.v; nonzero = true)
+	plskern   plot_biplot(m.T, m.P; ntop = 10)
+	plsda     plot_biplot(m.variates_X, m.loadings_X; group = y, ntop = 10)
+	splsda    plot_biplot(m.variates_X, m.loadings_X; group = y, nonzero = true)
+	cca       plot_biplot(permutedims(cca_transform(m, Z, :x)), m.xproj)
+	scca      plot_biplot(permutedims(Z) * m.u, m.u; nonzero = true)
+	jive      plot_biplot(permutedims(m.S), m.U[i])
 
 Note that cca, scca and jive hold the variables in ROWS and the observations in
 COLUMNS, so their SCORES are transposed before being given here, while their LOADINGS
@@ -35,16 +35,16 @@ relative lengths mean something while their absolute lengths do not.
 
 Everything else is a plot attribute, so it is passed straight to the plot:
 
-    plot_biplot(pca_transform(m, X), m.loadings; group = y, ntop = 10,
-                xlabel = "PC 1 (52.3%)", ylabel = "PC 2 (18.4%)", title = "PCA biplot")
+	plot_biplot(pca_transform(m, X), m.loadings; group = y, ntop = 10,
+				xlabel = "PC 1 (52.3%)", ylabel = "PC 2 (18.4%)", title = "PCA biplot")
 
 =#
 
 
 """
 plot_biplot(scores::Matrix{Float64}, loadings::Matrix{Float64}; comps::Tuple{Int, Int} = (1, 2),
-            group::AbstractVector = [], varnames::Vector{String} = String[],
-            nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0, kwargs...)
+			group::AbstractVector = [], varnames::Vector{String} = String[],
+			nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0, kwargs...)
 Generates a biplot of a fitted model, drawing the observations as points and the variables as arrows.
 ## Arguments
 - `scores` is the matrix of scores, observations (rows) by components (columns), which
@@ -65,22 +65,22 @@ Generates a biplot of a fitted model, drawing the observations as points and the
   onto the cloud of points automatically.
 """
 function plot_biplot(scores::Matrix{Float64}, loadings::Matrix{Float64};
-                     comps::Tuple{Int, Int} = (1, 2), group::AbstractVector = [],
-                     varnames::Vector{String} = String[],
-                     nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0,
-                     kwargs...)
-    # get coordinates ready for plotting
-    sxy, axy, names = get_biplot_coords(scores, loadings; comps = comps,
-                                        varnames = varnames, nonzero = nonzero,
-                                        ntop = ntop, arrowscale = arrowscale)
-    biplot(sxy, group, axy, names; kwargs...)
+	comps::Tuple{Int, Int} = (1, 2), group::AbstractVector = [],
+	varnames::Vector{String} = String[],
+	nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0,
+	kwargs...)
+	# get coordinates ready for plotting
+	sxy, axy, names = get_biplot_coords(scores, loadings; comps = comps,
+		varnames = varnames, nonzero = nonzero,
+		ntop = ntop, arrowscale = arrowscale)
+	biplot(sxy, group, axy, names; kwargs...)
 end
 
 
 """
 plot_biplot!(scores::Matrix{Float64}, loadings::Matrix{Float64}; comps::Tuple{Int, Int} = (1, 2),
-             group::AbstractVector = [], varnames::Vector{String} = String[],
-             nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0, kwargs...)
+			 group::AbstractVector = [], varnames::Vector{String} = String[],
+			 nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0, kwargs...)
 Adds a biplot of a fitted model to the current plot.
 ## Arguments
 - `scores` is the matrix of scores, observations (rows) by components (columns), which
@@ -101,13 +101,13 @@ Adds a biplot of a fitted model to the current plot.
   onto the cloud of points automatically.
 """
 function plot_biplot!(scores::Matrix{Float64}, loadings::Matrix{Float64};
-                      comps::Tuple{Int, Int} = (1, 2), group::AbstractVector = [],
-                      varnames::Vector{String} = String[],
-                      nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0,
-                      kwargs...)
-    # get coordinates ready for plotting
-    sxy, axy, names = get_biplot_coords(scores, loadings; comps = comps,
-                                        varnames = varnames, nonzero = nonzero,
-                                        ntop = ntop, arrowscale = arrowscale)
-    biplot!(sxy, group, axy, names; kwargs...)
+	comps::Tuple{Int, Int} = (1, 2), group::AbstractVector = [],
+	varnames::Vector{String} = String[],
+	nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0,
+	kwargs...)
+	# get coordinates ready for plotting
+	sxy, axy, names = get_biplot_coords(scores, loadings; comps = comps,
+		varnames = varnames, nonzero = nonzero,
+		ntop = ntop, arrowscale = arrowscale)
+	biplot!(sxy, group, axy, names; kwargs...)
 end

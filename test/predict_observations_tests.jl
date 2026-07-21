@@ -5,7 +5,7 @@
     datadir = joinpath(@__DIR__, "data")
     refdir = joinpath(@__DIR__, "ref")
 
-    observed  = Helium.readhe(joinpath(datadir, "predict_observations_observed.he"))
+    observed = Helium.readhe(joinpath(datadir, "predict_observations_observed.he"))
     predicted = Helium.readhe(joinpath(datadir, "predict_observations_predicted.he"))
 
     # image test
@@ -22,10 +22,10 @@
     frac_diff = sum(img_test .!= img_ref) / length(img_ref)
     @test frac_diff < 0.02
 
-    rm(testpng; force = true)
+    rm(testpng; force=true)
 
     # attribute tests: the points carry observed on x and predicted on y
-    x, y, line, r2 = get_predict_observations_coords(observed, predicted; resp = 1)
+    x, y, line, r2 = get_predict_observations_coords(observed, predicted; resp=1)
 
     plt = predictobsplot(x, y, line, r2)
 
@@ -37,12 +37,12 @@
     # the reference line is a two-point path running corner to corner of the diagonal
     lo, hi = line
     refline = [s for s in plt.series_list
-               if s[:seriestype] == :path && s[:x] == [lo, hi] && s[:y] == [lo, hi]]
+                     if s[:seriestype] == :path && s[:x] == [lo, hi] && s[:y] == [lo, hi]]
     @test length(refline) == 1
 
     # with the reference line off, no such path
-    plt_noref = predictobsplot(x, y, line, r2; refline = false)
+    plt_noref = predictobsplot(x, y, line, r2; refline=false)
     @test isempty([s for s in plt_noref.series_list
-                   if s[:seriestype] == :path && s[:x] == [lo, hi] && s[:y] == [lo, hi]])
+                         if s[:seriestype] == :path && s[:x] == [lo, hi] && s[:y] == [lo, hi]])
 
 end

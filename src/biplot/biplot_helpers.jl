@@ -1,18 +1,18 @@
 #=
 List of the biplot helpers functions
 - get_biplot_coords
-    Returns the coordinates of two components of a matrix of scores together with the
-    loading arrows of the same two components, ready for plotting.
+	Returns the coordinates of two components of a matrix of scores together with the
+	loading arrows of the same two components, ready for plotting.
 - get_ellipse_coords
-    Returns the points of a confidence ellipse around a cloud of observations.
+	Returns the points of a confidence ellipse around a cloud of observations.
 
 =#
 
 
 """
 get_biplot_coords(scores::Matrix{Float64}, loadings::Matrix{Float64};
-                  comps::Tuple{Int, Int} = (1, 2), varnames::Vector{String} = String[],
-                  nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0) =>
+				  comps::Tuple{Int, Int} = (1, 2), varnames::Vector{String} = String[],
+				  nonzero::Bool = false, ntop::Int = 0, arrowscale::Float64 = 0.0) =>
 
 Returns the coordinates of two components of a matrix of scores together with the
 loading arrows of the same two components, ready for plotting.
@@ -47,78 +47,78 @@ loading arrows of the same two components, ready for plotting.
 
 """
 function get_biplot_coords(scores::Matrix{Float64}, loadings::Matrix{Float64};
-                           comps::Tuple{Int, Int} = (1, 2),
-                           varnames::Vector{String} = String[],
-                           nonzero::Bool = false, ntop::Int = 0,
-                           arrowscale::Float64 = 0.0)
+	comps::Tuple{Int, Int} = (1, 2),
+	varnames::Vector{String} = String[],
+	nonzero::Bool = false, ntop::Int = 0,
+	arrowscale::Float64 = 0.0)
 
-    check_comps(comps, size(scores, 2))
-    check_comps(comps, size(loadings, 2))
-    i, j = comps
+	check_comps(comps, size(scores, 2))
+	check_comps(comps, size(loadings, 2))
+	i, j = comps
 
-    # check that a name was given for every variable, when any were given
-    if !isempty(varnames) && length(varnames) != size(loadings, 1)
-        error("Biplot varnames should be given one per variable.  Got: $(length(varnames)) for $(size(loadings, 1))")
-    end
+	# check that a name was given for every variable, when any were given
+	if !isempty(varnames) && length(varnames) != size(loadings, 1)
+		error("Biplot varnames should be given one per variable.  Got: $(length(varnames)) for $(size(loadings, 1))")
+	end
 
-    sxy = scores[:, [i, j]]
+	sxy = scores[:, [i, j]]
 
-    ######################
-    # Variables to keep  #
-    ######################
+	######################
+	# Variables to keep  #
+	######################
 
-    idx = collect(1:size(loadings, 1))
+	idx = collect(1:size(loadings, 1))
 
-    # drop the variables the penalty zeroed out on both components, since their arrows
-    # have no length and only crowd the origin
-    if nonzero
-        idx = idx[[loadings[v, i] != 0 || loadings[v, j] != 0 for v in idx]]
-    end
+	# drop the variables the penalty zeroed out on both components, since their arrows
+	# have no length and only crowd the origin
+	if nonzero
+		idx = idx[[loadings[v, i] != 0 || loadings[v, j] != 0 for v in idx]]
+	end
 
-    if isempty(idx)
-        error("Biplots should be given at least one variable to draw.  Got: none on components $(comps)")
-    end
+	if isempty(idx)
+		error("Biplots should be given at least one variable to draw.  Got: none on components $(comps)")
+	end
 
-    # rank by the length of the arrow, which is what the reader of a biplot goes by,
-    # then put them back in variable order
-    if ntop > 0 && ntop < length(idx)
-        len = [sqrt(loadings[v, i]^2 + loadings[v, j]^2) for v in idx]
-        ord = sortperm(len, rev = true)
-        idx = sort(idx[ord[1:ntop]])
-    end
+	# rank by the length of the arrow, which is what the reader of a biplot goes by,
+	# then put them back in variable order
+	if ntop > 0 && ntop < length(idx)
+		len = [sqrt(loadings[v, i]^2 + loadings[v, j]^2) for v in idx]
+		ord = sortperm(len, rev = true)
+		idx = sort(idx[ord[1:ntop]])
+	end
 
-    axy = loadings[idx, [i, j]]
+	axy = loadings[idx, [i, j]]
 
-    ##################
-    # Arrow scaling  #
-    ##################
+	##################
+	# Arrow scaling  #
+	##################
 
-    s = arrowscale
+	s = arrowscale
 
-    # the loadings are unit length, so without a stretch the arrows sit invisible at
-    # the origin next to the cloud of points
-    if s == 0.0
-        srange = maximum(abs, sxy)
-        lrange = maximum(abs, axy)
-        s = lrange == 0 ? 1.0 : 0.8 * srange / lrange
-    end
+	# the loadings are unit length, so without a stretch the arrows sit invisible at
+	# the origin next to the cloud of points
+	if s == 0.0
+		srange = maximum(abs, sxy)
+		lrange = maximum(abs, axy)
+		s = lrange == 0 ? 1.0 : 0.8 * srange / lrange
+	end
 
-    axy = s .* axy
+	axy = s .* axy
 
-    # the variables are named by their index when no names were given
-    if isempty(varnames)
-        names = ["$(v)" for v in idx]
-    else
-        names = varnames[idx]
-    end
+	# the variables are named by their index when no names were given
+	if isempty(varnames)
+		names = ["$(v)" for v in idx]
+	else
+		names = varnames[idx]
+	end
 
-    return sxy, axy, names
+	return sxy, axy, names
 end
 
 
 """
 get_ellipse_coords(x::AbstractVector, y::AbstractVector; nstd::Float64 = 2.5,
-                   npoints::Int = 100) =>
+				   npoints::Int = 100) =>
 
 Returns the points of a confidence ellipse around a cloud of observations.
 
@@ -141,42 +141,42 @@ so that the package needs no dependency beyond RecipesBase and the standard libr
 
 """
 function get_ellipse_coords(x::AbstractVector, y::AbstractVector; nstd::Float64 = 2.5,
-                            npoints::Int = 100)
+	npoints::Int = 100)
 
-    # a covariance needs three points to be worth anything, and two to exist at all
-    if length(x) < 3
-        error("Ellipses should be given at least three observations.  Got: $(length(x))")
-    end
+	# a covariance needs three points to be worth anything, and two to exist at all
+	if length(x) < 3
+		error("Ellipses should be given at least three observations.  Got: $(length(x))")
+	end
 
-    if length(x) != length(y)
-        error("Ellipses should be given vectors of equal length.  Got: $(length(x)), $(length(y))")
-    end
+	if length(x) != length(y)
+		error("Ellipses should be given vectors of equal length.  Got: $(length(x)), $(length(y))")
+	end
 
-    C = cov(hcat(x, y))
+	C = cov(hcat(x, y))
 
-    # the eigenvectors give the axes of the cloud and the eigenvalues their variances,
-    # so the square roots of the eigenvalues are the radii in standard deviations
-    F = eigen(Symmetric(C))
+	# the eigenvectors give the axes of the cloud and the eigenvalues their variances,
+	# so the square roots of the eigenvalues are the radii in standard deviations
+	F = eigen(Symmetric(C))
 
-    # a variance is never negative, but a rounding error can leave a tiny one so
-    vals = max.(F.values, 0.0)
+	# a variance is never negative, but a rounding error can leave a tiny one so
+	vals = max.(F.values, 0.0)
 
-    # npoints distinct angles around the circle, without repeating the start point at the
-    # end, so the trace carries no duplicate and point i and point i+npoints/2 are exact
-    # antipodes
-    t = range(0, 2 * pi, length = npoints + 1)[1:npoints]
-    circle = vcat(cos.(t)', sin.(t)')
+	# npoints distinct angles around the circle, without repeating the start point at the
+	# end, so the trace carries no duplicate and point i and point i+npoints/2 are exact
+	# antipodes
+	t = range(0, 2 * pi, length = npoints + 1)[1:npoints]
+	circle = vcat(cos.(t)', sin.(t)')
 
-    # scale the unit circle onto the radii, then rotate it onto the axes of the cloud
-    pts = F.vectors * ((nstd .* sqrt.(vals)) .* circle)
+	# scale the unit circle onto the radii, then rotate it onto the axes of the cloud
+	pts = F.vectors * ((nstd .* sqrt.(vals)) .* circle)
 
-    ex = pts[1, :] .+ mean(x)
-    ey = pts[2, :] .+ mean(y)
+	ex = pts[1, :] .+ mean(x)
+	ey = pts[2, :] .+ mean(y)
 
-    # close the loop for drawing: the trace stops one step short of a full turn, so the
-    # first point is appended to bring the path back to where it began
-    push!(ex, ex[1])
-    push!(ey, ey[1])
+	# close the loop for drawing: the trace stops one step short of a full turn, so the
+	# first point is appended to bring the path back to where it began
+	push!(ex, ex[1])
+	push!(ey, ey[1])
 
-    return ex, ey
+	return ex, ey
 end

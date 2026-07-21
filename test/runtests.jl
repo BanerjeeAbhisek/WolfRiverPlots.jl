@@ -23,37 +23,37 @@ ENV["GKSwstype"] = "nul"
 
 
 @testset "WolfRiverPlots.jl" begin
-    include("recipes_tests.jl")
+	include("recipes_tests.jl")
 
-    ###########
-    # helpers #
-    ###########
+	###########
+	# helpers #
+	###########
 
-    include("utils_tests.jl")
-    include("scores_helpers_tests.jl")
-    include("loadings_helpers_tests.jl")
-    include("loadings_heatmap_helpers_tests.jl")
-    include("pairs_helpers_tests.jl")
-    include("biplot_helpers_tests.jl")
-    include("scree_helpers_tests.jl")
-    include("vip_helpers_tests.jl")
-    include("sparsity_helpers_tests.jl")
-    include("predict_observations_helpers_tests.jl")
-    include("jive_variance_helpers_tests.jl")
+	include("utils_tests.jl")
+	include("scores_helpers_tests.jl")
+	include("loadings_helpers_tests.jl")
+	include("loadings_heatmap_helpers_tests.jl")
+	include("pairs_helpers_tests.jl")
+	include("biplot_helpers_tests.jl")
+	include("scree_helpers_tests.jl")
+	include("vip_helpers_tests.jl")
+	include("sparsity_helpers_tests.jl")
+	include("predict_observations_helpers_tests.jl")
+	include("jive_variance_helpers_tests.jl")
 
-    #########
-    # plots #
-    #########
+	#########
+	# plots #
+	#########
 
-    include("scores_tests.jl")
-    include("loadings_tests.jl")
-    include("loadings_heatmap_tests.jl")
-    include("pairs_tests.jl")
-    include("biplot_tests.jl")
-    include("scree_tests.jl")
-    include("vip_tests.jl")
-    include("sparsity_tests.jl")
-    include("predict_observations_tests.jl")
-    include("jive_variance_tests.jl")
+	include("scores_tests.jl")
+	include("loadings_tests.jl")
+	include("loadings_heatmap_tests.jl")
+	include("pairs_tests.jl")
+	include("biplot_tests.jl")
+	include("scree_tests.jl")
+	include("vip_tests.jl")
+	include("sparsity_tests.jl")
+	include("predict_observations_tests.jl")
+	include("jive_variance_tests.jl")
 
 end

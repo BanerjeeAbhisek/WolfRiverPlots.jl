@@ -1,15 +1,15 @@
 #=
 List of the pairs helpers functions
 - get_pairs_coords
-    Returns the components of a matrix of scores to be crossed against one another,
-    ready for plotting, together with the names they belong to.
+	Returns the components of a matrix of scores to be crossed against one another,
+	ready for plotting, together with the names they belong to.
 
 =#
 
 
 """
 get_pairs_coords(scores::Matrix{Float64}; comps::Vector{Int} = Int[],
-                 compnames::Vector{String} = String[]) =>
+				 compnames::Vector{String} = String[]) =>
 
 Returns the components of a matrix of scores to be crossed against one another, ready
 for plotting, together with the names they belong to.
@@ -36,39 +36,39 @@ for plotting, together with the names they belong to.
 
 """
 function get_pairs_coords(scores::Matrix{Float64}; comps::Vector{Int} = Int[],
-                          compnames::Vector{String} = String[])
+	compnames::Vector{String} = String[])
 
-    ncomp = size(scores, 2)
+	ncomp = size(scores, 2)
 
-    # check that a name was given for every component, when any were given
-    if !isempty(compnames) && length(compnames) != ncomp
-        error("Pairs compnames should be given one per component.  Got: $(length(compnames)) for $(ncomp)")
-    end
+	# check that a name was given for every component, when any were given
+	if !isempty(compnames) && length(compnames) != ncomp
+		error("Pairs compnames should be given one per component.  Got: $(length(compnames)) for $(ncomp)")
+	end
 
-    #######################
-    # Components to keep  #
-    #######################
+	#######################
+	# Components to keep  #
+	#######################
 
-    # every component is crossed when none were named
-    jdx = isempty(comps) ? collect(1:ncomp) : comps
+	# every component is crossed when none were named
+	jdx = isempty(comps) ? collect(1:ncomp) : comps
 
-    for j in jdx
-        check_comps(j, ncomp)
-    end
+	for j in jdx
+		check_comps(j, ncomp)
+	end
 
-    # a grid needs two components to have anything off the diagonal to draw
-    if length(jdx) < 2
-        error("Pairs Plots should be given at least two components to cross.  Got: $(length(jdx))")
-    end
+	# a grid needs two components to have anything off the diagonal to draw
+	if length(jdx) < 2
+		error("Pairs Plots should be given at least two components to cross.  Got: $(length(jdx))")
+	end
 
-    z = scores[:, jdx]
+	z = scores[:, jdx]
 
-    # the components are named by their index when no names were given
-    if isempty(compnames)
-        names = ["$(j)" for j in jdx]
-    else
-        names = compnames[jdx]
-    end
+	# the components are named by their index when no names were given
+	if isempty(compnames)
+		names = ["$(j)" for j in jdx]
+	else
+		names = compnames[jdx]
+	end
 
-    return z, names
+	return z, names
 end

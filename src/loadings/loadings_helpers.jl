@@ -1,16 +1,16 @@
 #=
 List of the loadings helpers functions
 - get_loadings_coords
-    Returns the loadings of one component of a matrix of loadings, ready for plotting,
-    together with the names of the variables they belong to.
+	Returns the loadings of one component of a matrix of loadings, ready for plotting,
+	together with the names of the variables they belong to.
 
 =#
 
 
 """
 get_loadings_coords(loadings::Matrix{Float64}; comp::Int = 1,
-                    varnames::Vector{String} = String[],
-                    nonzero::Bool = false, ntop::Int = 0) =>
+					varnames::Vector{String} = String[],
+					nonzero::Bool = false, ntop::Int = 0) =>
 
 Returns the loadings of one component of a matrix of loadings, ready for plotting,
 together with the names of the variables they belong to.
@@ -42,49 +42,49 @@ together with the names of the variables they belong to.
 
 """
 function get_loadings_coords(loadings::Matrix{Float64}; comp::Int = 1,
-                             varnames::Vector{String} = String[],
-                             nonzero::Bool = false, ntop::Int = 0)
+	varnames::Vector{String} = String[],
+	nonzero::Bool = false, ntop::Int = 0)
 
-    check_comps(comp, size(loadings, 2))
+	check_comps(comp, size(loadings, 2))
 
-    # check that a name was given for every variable, when any were given
-    if !isempty(varnames) && length(varnames) != size(loadings, 1)
-        error("Loadings varnames should be given one per variable.  Got: $(length(varnames)) for $(size(loadings, 1))")
-    end
+	# check that a name was given for every variable, when any were given
+	if !isempty(varnames) && length(varnames) != size(loadings, 1)
+		error("Loadings varnames should be given one per variable.  Got: $(length(varnames)) for $(size(loadings, 1))")
+	end
 
-    v = loadings[:, comp]
+	v = loadings[:, comp]
 
-    ######################
-    # Variables to keep  #
-    ######################
+	######################
+	# Variables to keep  #
+	######################
 
-    idx = collect(1:length(v))
+	idx = collect(1:length(v))
 
-    # drop the variables the penalty zeroed out, so the selected ones stand alone
-    if nonzero
-        idx = idx[v[idx].!=0]
-    end
+	# drop the variables the penalty zeroed out, so the selected ones stand alone
+	if nonzero
+		idx = idx[v[idx] .!= 0]
+	end
 
-    if isempty(idx)
-        error("Loadings Plots should be given a component with at least one variable to draw.  Got: none on component $(comp)")
-    end
+	if isempty(idx)
+		error("Loadings Plots should be given a component with at least one variable to draw.  Got: none on component $(comp)")
+	end
 
-    # keep the largest by magnitude, then put them back in variable order so the axis
-    # still reads left to right as the data does
-    if ntop > 0 && ntop < length(idx)
-        ord = sortperm(abs.(v[idx]), rev = true)
-        idx = sort(idx[ord[1:ntop]])
-    end
+	# keep the largest by magnitude, then put them back in variable order so the axis
+	# still reads left to right as the data does
+	if ntop > 0 && ntop < length(idx)
+		ord = sortperm(abs.(v[idx]), rev = true)
+		idx = sort(idx[ord[1:ntop]])
+	end
 
-    x = collect(1:length(idx))
-    y = v[idx]
+	x = collect(1:length(idx))
+	y = v[idx]
 
-    # the variables are named by their index when no names were given
-    if isempty(varnames)
-        names = ["$(i)" for i in idx]
-    else
-        names = varnames[idx]
-    end
+	# the variables are named by their index when no names were given
+	if isempty(varnames)
+		names = ["$(i)" for i in idx]
+	else
+		names = varnames[idx]
+	end
 
-    return x, y, names
+	return x, y, names
 end

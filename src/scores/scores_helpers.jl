@@ -1,8 +1,8 @@
 #=
 List of the scores helpers functions
 - get_scores_coords
-    Returns the coordinates of two components of a matrix of scores, ready for
-    plotting.
+	Returns the coordinates of two components of a matrix of scores, ready for
+	plotting.
 
 =#
 
@@ -27,11 +27,11 @@ Returns the coordinates of two components of a matrix of scores, ready for plott
 """
 function get_scores_coords(scores::Matrix{Float64}; comps::Tuple{Int, Int} = (1, 2))
 
-    check_comps(comps, size(scores, 2))
-    i, j = comps
+	check_comps(comps, size(scores, 2))
+	i, j = comps
 
-    x = scores[:, i]
-    y = scores[:, j]
+	x = scores[:, i]
+	y = scores[:, j]
 
-    return x, y
+	return x, y
 end

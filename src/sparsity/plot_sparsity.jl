@@ -6,10 +6,10 @@ component, reads at a glance.
 
 The models with an L1 penalty pass the field their penalty acts on:
 
-    spc       plot_sparsity(m.loadings)
-    pmd       plot_sparsity(m.v)                # the variable side; m.u for the sample side
-    splsda    plot_sparsity(m.loadings_X)
-    scca      plot_sparsity(m.u)                # the X side; m.v for the Y side
+	spc       plot_sparsity(m.loadings)
+	pmd       plot_sparsity(m.v)                # the variable side; m.u for the sample side
+	splsda    plot_sparsity(m.loadings_X)
+	scca      plot_sparsity(m.u)                # the X side; m.v for the Y side
 
 The dense models (pca, plskern, plsda, cca) select every variable on every component, so
 their sparsity plot would be a flat row of full bars and is not drawn.
@@ -22,14 +22,14 @@ the count, which reads more easily when the variables are many.
 
 Everything else is a plot attribute, so it is passed straight to the plot:
 
-    plot_sparsity(m.loadings; compnames = ["SPC 1", "SPC 2"], title = "sparse PCA")
+	plot_sparsity(m.loadings; compnames = ["SPC 1", "SPC 2"], title = "sparse PCA")
 
 =#
 
 
 """
 plot_sparsity(loadings::Matrix{Float64}; ncomp::Int = 0, compnames::Vector{String} = String[],
-              asfraction::Bool = false, kwargs...)
+			  asfraction::Bool = false, kwargs...)
 Generates a bar plot of the number of variables each component of a penalized model keeps nonzero.
 ## Arguments
 - `loadings` is a matrix of loadings, variables (rows) by components (columns), from a
@@ -42,18 +42,18 @@ Generates a bar plot of the number of variables each component of a penalized mo
   default is `false`.
 """
 function plot_sparsity(loadings::Matrix{Float64}; comps::Vector{Int} = Int[], ncomp::Int = 0,
-                       compnames::Vector{String} = String[], asfraction::Bool = false,
-                       kwargs...)
-    # get coordinates ready for plotting
-    x, y, names = get_sparsity_coords(loadings; comps = comps, ncomp = ncomp, compnames = compnames,
-                                      asfraction = asfraction)
-    sparsityplot(x, y, names; kwargs...)
+	compnames::Vector{String} = String[], asfraction::Bool = false,
+	kwargs...)
+	# get coordinates ready for plotting
+	x, y, names = get_sparsity_coords(loadings; comps = comps, ncomp = ncomp, compnames = compnames,
+		asfraction = asfraction)
+	sparsityplot(x, y, names; kwargs...)
 end
 
 
 """
 plot_sparsity!(loadings::Matrix{Float64}; ncomp::Int = 0, compnames::Vector{String} = String[],
-               asfraction::Bool = false, kwargs...)
+			   asfraction::Bool = false, kwargs...)
 Adds a bar plot of the number of variables each component of a penalized model keeps nonzero to the current plot.
 ## Arguments
 - `loadings` is a matrix of loadings, variables (rows) by components (columns), from a
@@ -66,10 +66,10 @@ Adds a bar plot of the number of variables each component of a penalized model k
   default is `false`.
 """
 function plot_sparsity!(loadings::Matrix{Float64}; comps::Vector{Int} = Int[], ncomp::Int = 0,
-                        compnames::Vector{String} = String[], asfraction::Bool = false,
-                        kwargs...)
-    # get coordinates ready for plotting
-    x, y, names = get_sparsity_coords(loadings; comps = comps, ncomp = ncomp, compnames = compnames,
-                                      asfraction = asfraction)
-    sparsityplot!(x, y, names; kwargs...)
+	compnames::Vector{String} = String[], asfraction::Bool = false,
+	kwargs...)
+	# get coordinates ready for plotting
+	x, y, names = get_sparsity_coords(loadings; comps = comps, ncomp = ncomp, compnames = compnames,
+		asfraction = asfraction)
+	sparsityplot!(x, y, names; kwargs...)
 end

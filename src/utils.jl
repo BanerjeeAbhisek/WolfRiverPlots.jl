@@ -1,11 +1,11 @@
 #=
 List of the utils functions
 - get_levels
-    Returns the unique levels of a grouping vector, in order of first appearance,
-    so that each class is drawn as its own series.
+	Returns the unique levels of a grouping vector, in order of first appearance,
+	so that each class is drawn as its own series.
 - check_comps
-    Checks that a requested component index, or pair of component indices, exists in
-    a fitted model.
+	Checks that a requested component index, or pair of component indices, exists in
+	a fitted model.
 
 =#
 
@@ -27,16 +27,16 @@ Returns the unique levels of a grouping vector, in order of first appearance.
 """
 function get_levels(group::AbstractVector)
 
-    # no grouping was requested, so there are no levels to split on
-    if isempty(group)
-        return []
-    end
+	# no grouping was requested, so there are no levels to split on
+	if isempty(group)
+		return []
+	end
 
-    # unique preserves the order of first appearance, so the legend follows the
-    # order the classes appear in the data rather than an arbitrary sort
-    vLevels = unique(group)
+	# unique preserves the order of first appearance, so the legend follows the
+	# order the classes appear in the data rather than an arbitrary sort
+	vLevels = unique(group)
 
-    return vLevels
+	return vLevels
 end
 
 
@@ -58,11 +58,11 @@ Checks that a requested component index exists in a fitted model.
 """
 function check_comps(comp::Int, ncomp::Int)
 
-    if comp < 1 || comp > ncomp
-        error("Component should be in the range 1:$(ncomp).  Got: $(comp)")
-    end
+	if comp < 1 || comp > ncomp
+		error("Component should be in the range 1:$(ncomp).  Got: $(comp)")
+	end
 
-    return nothing
+	return nothing
 end
 
 
@@ -84,11 +84,11 @@ Checks that a requested pair of component indices exists in a fitted model.
 """
 function check_comps(comps::Tuple{Int, Int}, ncomp::Int)
 
-    i, j = comps
+	i, j = comps
 
-    if i < 1 || i > ncomp || j < 1 || j > ncomp
-        error("Components should be in the range 1:$(ncomp).  Got: $(comps)")
-    end
+	if i < 1 || i > ncomp || j < 1 || j > ncomp
+		error("Components should be in the range 1:$(ncomp).  Got: $(comps)")
+	end
 
-    return nothing
+	return nothing
 end

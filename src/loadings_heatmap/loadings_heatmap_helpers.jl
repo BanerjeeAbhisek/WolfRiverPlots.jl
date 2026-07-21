@@ -1,17 +1,17 @@
 #=
 List of the loadings heatmap helpers functions
 - get_loadings_heatmap_coords
-    Returns the loadings of a fitted model, ready for plotting as a heatmap, together
-    with the names of the variables and of the components they belong to.
+	Returns the loadings of a fitted model, ready for plotting as a heatmap, together
+	with the names of the variables and of the components they belong to.
 
 =#
 
 
 """
 get_loadings_heatmap_coords(loadings::Matrix{Float64}; comps::Vector{Int} = Int[],
-                            varnames::Vector{String} = String[],
-                            compnames::Vector{String} = String[],
-                            nonzero::Bool = false, ntop::Int = 0) =>
+							varnames::Vector{String} = String[],
+							compnames::Vector{String} = String[],
+							nonzero::Bool = false, ntop::Int = 0) =>
 
 Returns the loadings of a fitted model, ready for plotting as a heatmap, together with
 the names of the variables and of the components they belong to.
@@ -49,71 +49,71 @@ the names of the variables and of the components they belong to.
 
 """
 function get_loadings_heatmap_coords(loadings::Matrix{Float64}; comps::Vector{Int} = Int[],
-                                     varnames::Vector{String} = String[],
-                                     compnames::Vector{String} = String[],
-                                     nonzero::Bool = false, ntop::Int = 0)
+	varnames::Vector{String} = String[],
+	compnames::Vector{String} = String[],
+	nonzero::Bool = false, ntop::Int = 0)
 
-    ncomp = size(loadings, 2)
+	ncomp = size(loadings, 2)
 
-    # check that a name was given for every variable, when any were given
-    if !isempty(varnames) && length(varnames) != size(loadings, 1)
-        error("Loadings Heatmap varnames should be given one per variable.  Got: $(length(varnames)) for $(size(loadings, 1))")
-    end
+	# check that a name was given for every variable, when any were given
+	if !isempty(varnames) && length(varnames) != size(loadings, 1)
+		error("Loadings Heatmap varnames should be given one per variable.  Got: $(length(varnames)) for $(size(loadings, 1))")
+	end
 
-    # check that a name was given for every component, when any were given
-    if !isempty(compnames) && length(compnames) != ncomp
-        error("Loadings Heatmap compnames should be given one per component.  Got: $(length(compnames)) for $(ncomp)")
-    end
+	# check that a name was given for every component, when any were given
+	if !isempty(compnames) && length(compnames) != ncomp
+		error("Loadings Heatmap compnames should be given one per component.  Got: $(length(compnames)) for $(ncomp)")
+	end
 
-    #######################
-    # Components to keep  #
-    #######################
+	#######################
+	# Components to keep  #
+	#######################
 
-    # every component is drawn when none were named
-    jdx = isempty(comps) ? collect(1:ncomp) : comps
+	# every component is drawn when none were named
+	jdx = isempty(comps) ? collect(1:ncomp) : comps
 
-    for j in jdx
-        check_comps(j, ncomp)
-    end
+	for j in jdx
+		check_comps(j, ncomp)
+	end
 
-    ######################
-    # Variables to keep  #
-    ######################
+	######################
+	# Variables to keep  #
+	######################
 
-    idx = collect(1:size(loadings, 1))
+	idx = collect(1:size(loadings, 1))
 
-    # drop the variables the penalty zeroed out on every component drawn, since a row
-    # of zeros carries nothing and only pushes the rest of the map together
-    if nonzero
-        idx = idx[[any(loadings[i, jdx] .!= 0) for i in idx]]
-    end
+	# drop the variables the penalty zeroed out on every component drawn, since a row
+	# of zeros carries nothing and only pushes the rest of the map together
+	if nonzero
+		idx = idx[[any(loadings[i, jdx] .!= 0) for i in idx]]
+	end
 
-    if isempty(idx)
-        error("Loadings Heatmap Plots should be given at least one variable to draw.  Got: none on components $(jdx)")
-    end
+	if isempty(idx)
+		error("Loadings Heatmap Plots should be given at least one variable to draw.  Got: none on components $(jdx)")
+	end
 
-    # rank by the largest loading a variable reaches on ANY of the components drawn,
-    # then put them back in variable order so the axis still reads as the data does
-    if ntop > 0 && ntop < length(idx)
-        peak = [maximum(abs, loadings[i, jdx]) for i in idx]
-        ord = sortperm(peak, rev = true)
-        idx = sort(idx[ord[1:ntop]])
-    end
+	# rank by the largest loading a variable reaches on ANY of the components drawn,
+	# then put them back in variable order so the axis still reads as the data does
+	if ntop > 0 && ntop < length(idx)
+		peak = [maximum(abs, loadings[i, jdx]) for i in idx]
+		ord = sortperm(peak, rev = true)
+		idx = sort(idx[ord[1:ntop]])
+	end
 
-    z = loadings[idx, jdx]
+	z = loadings[idx, jdx]
 
-    # the variables and the components are named by their index when no names were given
-    if isempty(varnames)
-        ynames = ["$(i)" for i in idx]
-    else
-        ynames = varnames[idx]
-    end
+	# the variables and the components are named by their index when no names were given
+	if isempty(varnames)
+		ynames = ["$(i)" for i in idx]
+	else
+		ynames = varnames[idx]
+	end
 
-    if isempty(compnames)
-        xnames = ["$(j)" for j in jdx]
-    else
-        xnames = compnames[jdx]
-    end
+	if isempty(compnames)
+		xnames = ["$(j)" for j in jdx]
+	else
+		xnames = compnames[jdx]
+	end
 
-    return z, xnames, ynames
+	return z, xnames, ynames
 end

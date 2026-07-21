@@ -1,16 +1,16 @@
 #=
 List of the vip helpers functions
 - get_vip_coords
-    Returns the VIP scores of one component of a VIP matrix, sorted from the largest to
-    the smallest, ready for plotting as horizontal bars, together with the names of the
-    variables they belong to.
+	Returns the VIP scores of one component of a VIP matrix, sorted from the largest to
+	the smallest, ready for plotting as horizontal bars, together with the names of the
+	variables they belong to.
 
 =#
 
 
 """
 get_vip_coords(vips::Matrix{Float64}; comp::Int = 0, varnames::Vector{String} = String[],
-               above::Bool = false, ntop::Int = 0) =>
+			   above::Bool = false, ntop::Int = 0) =>
 
 Returns the VIP scores of one component of a VIP matrix, sorted from the largest to the
 smallest, ready for plotting as horizontal bars, together with the names of the
@@ -47,61 +47,61 @@ one is the height at which the curve crosses the line.
 
 """
 function get_vip_coords(vips::Matrix{Float64}; comp::Int = 0,
-                        varnames::Vector{String} = String[],
-                        above::Bool = false, ntop::Int = 0)
+	varnames::Vector{String} = String[],
+	above::Bool = false, ntop::Int = 0)
 
-    ncomp = size(vips, 2)
+	ncomp = size(vips, 2)
 
-    # the last component is the overall VIP, the column usually read
-    c = comp == 0 ? ncomp : comp
+	# the last component is the overall VIP, the column usually read
+	c = comp == 0 ? ncomp : comp
 
-    check_comps(c, ncomp)
+	check_comps(c, ncomp)
 
-    # check that a name was given for every variable, when any were given
-    if !isempty(varnames) && length(varnames) != size(vips, 1)
-        error("VIP varnames should be given one per variable.  Got: $(length(varnames)) for $(size(vips, 1))")
-    end
+	# check that a name was given for every variable, when any were given
+	if !isempty(varnames) && length(varnames) != size(vips, 1)
+		error("VIP varnames should be given one per variable.  Got: $(length(varnames)) for $(size(vips, 1))")
+	end
 
-    v = vips[:, c]
+	v = vips[:, c]
 
-    ######################
-    # Variables to keep  #
-    ######################
+	######################
+	# Variables to keep  #
+	######################
 
-    idx = collect(1:length(v))
+	idx = collect(1:length(v))
 
-    # keep only the important variables, those scoring above the threshold of one
-    if above
-        idx = idx[v[idx].>1]
-    end
+	# keep only the important variables, those scoring above the threshold of one
+	if above
+		idx = idx[v[idx] .> 1]
+	end
 
-    if isempty(idx)
-        error("VIP Plots should be given a component with at least one variable to draw.  Got: none above the threshold on component $(c)")
-    end
+	if isempty(idx)
+		error("VIP Plots should be given a component with at least one variable to draw.  Got: none above the threshold on component $(c)")
+	end
 
-    ################
-    # Sort by VIP  #
-    ################
+	################
+	# Sort by VIP  #
+	################
 
-    # always ordered from the largest VIP to the smallest, since the layout is a ranked
-    # curve, not a plot in variable order. ntop then takes the head of that ranking
-    ord = sortperm(v[idx], rev = true)
+	# always ordered from the largest VIP to the smallest, since the layout is a ranked
+	# curve, not a plot in variable order. ntop then takes the head of that ranking
+	ord = sortperm(v[idx], rev = true)
 
-    if ntop > 0 && ntop < length(ord)
-        ord = ord[1:ntop]
-    end
+	if ntop > 0 && ntop < length(ord)
+		ord = ord[1:ntop]
+	end
 
-    idx = idx[ord]
+	idx = idx[ord]
 
-    x = collect(1:length(idx))
-    y = v[idx]
+	x = collect(1:length(idx))
+	y = v[idx]
 
-    # the variables are named by their index when no names were given
-    if isempty(varnames)
-        names = ["$(i)" for i in idx]
-    else
-        names = varnames[idx]
-    end
+	# the variables are named by their index when no names were given
+	if isempty(varnames)
+		names = ["$(i)" for i in idx]
+	else
+		names = varnames[idx]
+	end
 
-    return x, y, names
+	return x, y, names
 end

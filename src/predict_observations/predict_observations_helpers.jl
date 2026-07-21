@@ -1,16 +1,16 @@
 #=
 List of the predict observations helpers functions
 - get_predict_observations_coords
-    Returns the observed and predicted values of one response, ready for plotting one
-    against the other, together with the reference line and the coefficient of
-    determination.
+	Returns the observed and predicted values of one response, ready for plotting one
+	against the other, together with the reference line and the coefficient of
+	determination.
 
 =#
 
 
 """
 get_predict_observations_coords(observed::Matrix{Float64}, predicted::Matrix{Float64};
-                                resp::Int = 1) =>
+								resp::Int = 1) =>
 
 Returns the observed and predicted values of one response, ready for plotting one
 against the other, together with the reference line and the coefficient of
@@ -36,42 +36,42 @@ determination.
 
 """
 function get_predict_observations_coords(observed::Matrix{Float64}, predicted::Matrix{Float64};
-                                         resp::Int = 1)
+	resp::Int = 1)
 
-    # check that the two matrices line up
-    if size(observed) != size(predicted)
-        error("Predict Observations Plots should be given observed and predicted of the same size.  Got: $(size(observed)), $(size(predicted))")
-    end
+	# check that the two matrices line up
+	if size(observed) != size(predicted)
+		error("Predict Observations Plots should be given observed and predicted of the same size.  Got: $(size(observed)), $(size(predicted))")
+	end
 
-    q = size(observed, 2)
+	q = size(observed, 2)
 
-    if resp < 1 || resp > q
-        error("Response should be in the range 1:$(q).  Got: $(resp)")
-    end
+	if resp < 1 || resp > q
+		error("Response should be in the range 1:$(q).  Got: $(resp)")
+	end
 
-    x = observed[:, resp]
-    y = predicted[:, resp]
+	x = observed[:, resp]
+	y = predicted[:, resp]
 
-    ##################
-    # Reference line #
-    ##################
+	##################
+	# Reference line #
+	##################
 
-    # the line of perfect prediction runs at forty five degrees, so it spans the whole
-    # range of both the observed and the predicted, corner to corner
-    lo = min(minimum(x), minimum(y))
-    hi = max(maximum(x), maximum(y))
-    line = (lo, hi)
+	# the line of perfect prediction runs at forty five degrees, so it spans the whole
+	# range of both the observed and the predicted, corner to corner
+	lo = min(minimum(x), minimum(y))
+	hi = max(maximum(x), maximum(y))
+	line = (lo, hi)
 
-    ####################
-    # R squared        #
-    ####################
+	####################
+	# R squared        #
+	####################
 
-    # the fraction of the variance of the observed the predictions account for: one minus
-    # the residual sum of squares over the total sum of squares
-    ybar = sum(x) / length(x)
-    ss_tot = sum((x .- ybar) .^ 2)
-    ss_res = sum((x .- y) .^ 2)
-    r2 = ss_tot == 0 ? 0.0 : 1 - ss_res / ss_tot
+	# the fraction of the variance of the observed the predictions account for: one minus
+	# the residual sum of squares over the total sum of squares
+	ybar = sum(x) / length(x)
+	ss_tot = sum((x .- ybar) .^ 2)
+	ss_res = sum((x .- y) .^ 2)
+	r2 = ss_tot == 0 ? 0.0 : 1 - ss_res / ss_tot
 
-    return x, y, line, r2
+	return x, y, line, r2
 end
