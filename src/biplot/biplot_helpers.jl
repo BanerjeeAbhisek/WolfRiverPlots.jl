@@ -161,7 +161,10 @@ function get_ellipse_coords(x::AbstractVector, y::AbstractVector; nstd::Float64 
     # a variance is never negative, but a rounding error can leave a tiny one so
     vals = max.(F.values, 0.0)
 
-    t = range(0, 2 * pi, length = npoints)
+    # npoints distinct angles around the circle, without repeating the start point at the
+    # end, so the trace carries no duplicate and point i and point i+npoints/2 are exact
+    # antipodes
+    t = range(0, 2 * pi, length = npoints + 1)[1:npoints]
     circle = vcat(cos.(t)', sin.(t)')
 
     # scale the unit circle onto the radii, then rotate it onto the axes of the cloud
@@ -169,6 +172,11 @@ function get_ellipse_coords(x::AbstractVector, y::AbstractVector; nstd::Float64 
 
     ex = pts[1, :] .+ mean(x)
     ey = pts[2, :] .+ mean(y)
+
+    # close the loop for drawing: the trace stops one step short of a full turn, so the
+    # first point is appended to bring the path back to where it began
+    push!(ex, ex[1])
+    push!(ey, ey[1])
 
     return ex, ey
 end

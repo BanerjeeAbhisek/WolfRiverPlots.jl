@@ -10,9 +10,9 @@
 
 include("generate_scores.jl")
 include("generate_loadings.jl")
-# include("generate_loadings_heatmap.jl")
-# include("generate_pairs.jl")
-# include("generate_biplot.jl")
+include("generate_loadings_heatmap.jl")
+include("generate_pairs.jl")
+include("generate_biplot.jl")
 # include("generate_scree.jl")
 # include("generate_vip.jl")
 # include("generate_sparsity.jl")

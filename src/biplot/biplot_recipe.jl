@@ -185,6 +185,7 @@
 			arrow --> :arrow
 			linecolor := arrowcolor
 			linewidth --> 1
+			markershape := :none
 			label := ""
 			primary := false
 
