@@ -114,4 +114,14 @@ export jivevarianceplot, jivevarianceplot!, JiveVariancePlot
 include("./jive_variance/plot_jive_variance.jl");
 export plot_jive_variance, plot_jive_variance!
 
+# mosaic functions
+include("./mosaic/mosaic_helpers.jl");
+export get_mosaic_coords
+
+include("./mosaic/mosaic_recipe.jl");
+export mosaicplot, mosaicplot!, MosaicPlot
+
+include("./mosaic/plot_mosaic.jl");
+export plot_mosaic, plot_mosaic!
+
 end # module WolfRiverPlots
