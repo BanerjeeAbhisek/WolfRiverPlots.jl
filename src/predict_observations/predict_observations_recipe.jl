@@ -88,6 +88,7 @@
 			linecolor := linecolor_
 			linestyle := :dash
 			linewidth --> 1.5
+            markershape := :none
 			label := ""
 			primary := false
 
