@@ -18,5 +18,6 @@ include("generate_vip.jl")
 include("generate_sparsity.jl")
 include("generate_predict_observations.jl")
 include("generate_jive_variance.jl")
+include("generate_mosaic.jl")
 
 @info "done"

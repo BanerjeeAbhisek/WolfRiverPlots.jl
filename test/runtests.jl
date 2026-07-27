@@ -40,6 +40,7 @@ ENV["GKSwstype"] = "nul"
 	include("sparsity_helpers_tests.jl")
 	include("predict_observations_helpers_tests.jl")
 	include("jive_variance_helpers_tests.jl")
+	include("mosaic_helpers_tests.jl")
 
 	#########
 	# plots #
