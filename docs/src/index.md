@@ -1,79 +1,52 @@
-# WolfRiverPlots.jl: A collection of plotting recipies for statistical analyses
+# WolfRiverPlots
+
 
 [![CI](https://github.com/senresearch/WolfRiverPlots.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/senresearch/WolfRiverPlots.jl/actions/workflows/ci.yml)
-[![Coverage](https://codecov.io/gh/senresearch/WolfRiverPlots.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/senresearch/WolfRiverPlots.jl)
+[![codecov](https://codecov.io/gh/senresearch/WolfRiverPlots.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/senresearch/WolfRiverPlots.jl)
+[![Docs](https://img.shields.io/badge/docs-dev-blue.svg)](https://senresearch.github.io/WolfRiverPlots.jl/dev)
+[![Pkg Status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-`WolfRiverPlots.jl` is a versatile plotting package built in the Julia programming language. The package consists of specific plotting recipes, designed to streamline data visualization and enhance the process of statistical analysis.
 
-## Features
-Currently we offer one function, and we will add more with time.
+## Description
 
-- `confidenceplot()`: This function is designed to create vertical
-  confidence plots. These plots can be used to visualize regression
-  coefficients and their confidence intervals visually.
+WolfRiverPlots provides a set of plotting recipes for visualizing the output of
+dimension reduction and matrix decomposition models. It is the visualization companion
+to [BigRiverEssence.jl](https://github.com/senresearch/BigRiverEssence.jl), turning a
+fitted model into the standard figures used to read it: scores, loadings, biplots, scree
+plots, and more.
 
+> **Why "WolfRiver"?** The name follows the BigRiver Julia package ecosystem, of which
+> this package is the plotting component.
+
+![WolfRiverPlots example plots](images/banner.svg)
+
+Every plot is built on [RecipesBase](https://github.com/JuliaPlots/RecipesBase.jl), so
+the recipes stay dormant until the user loads Plots. They are model-agnostic: each takes
+the matrices a model produces — a scores matrix, a loadings matrix, a vector of
+variances — rather than the model object itself, so any decomposition that yields those
+can be drawn with them.
+
+The package currently provides the following plots:
+
+* Scores plot — the observations in the space of two components
+* Loadings plot — the contribution of each variable to one component
+* Biplot — the observations and the variable loadings on one canvas
+* Loadings heatmap — every variable against every component
+* Pairs plot — a grid crossing several components at once
+* Scree plot — the variance carried by each component
+* VIP plot — the Variable Importance in Projection of a discriminant model
+* Sparsity plot — the number of variables each component keeps
+* Predicted versus observed plot — the fit of a regression
+* JIVE variance plot — the joint, individual, and residual variation of each block
+* Mosaic plot — a contingency table drawn as tiles of proportional area
 
 ## Installation
-To install `WolfRiverPlots.jl`, you can use Julia's package manager. Here is the command:
+
+The `WolfRiverPlots` package can be installed by running:
 
 ```julia
 using Pkg
 Pkg.add("WolfRiverPlots")
 ```
 
-## Usage
-After installing `WolfRiverPlots.jl`, you can include it in your Julia script using the following command:
-
-```julia
-using WolfRiverPlots
-```
-
-- Confidence plots:
-
-```julia
-# ε contains variation relative to x-estimates  
-plot_confidence(x, y, ε)
-```
-
-## Examples
-The following examples provide a basic idea of how to use the functions provided by `WolfRiverPlots.jl`. Before proceeding, ensure that you've installed `WolfRiverPlots.jl` and imported it into your Julia script using `using WolfRiverPlots` along with `Plots.jl`.
-
-### Example 1: Confidence Plot
-```julia
-using WolfRiverPlots
-using Distributions, Random
-using Plots
-
-########
-# Data #
-########
-
-Random.seed!(1203)
-
-x = randn(7)
-
-y = repeat([""], 7)
-y = map(x -> randstring('A':'Z', 2), y)
-
-ε = rand(Uniform(0.1,0.25), 7)
-
-########
-# Plot #
-########
-plot_confidence(x, y, ε,
-    title = "Confidence Plot\n",
-    xlabel = "Effect Size",
-    ylabel = "Variables")
-```
-
-![alt QTL](images/confidence_example.svg)
-
-
-## Contribution
-Contributions to WolfRiverPlots.jl are welcome and appreciated. If you'd like to contribute, please fork the repository and make changes as you'd like. If you have any questions or issues, feel free to open an issue on the repository.
-
-## License
-`WolfRiverPlots.jl` is licensed under the [GNU AFFERO GENERAL PUBLIC LICENSE](LICENSE). For more information, please refer to the LICENSE file in the repository.
-
-## Support
-If you have any problems or questions using `WolfRiverPlots.jl`, please open an issue on the GitHub repository. We'll be happy to help!
+or from the Julia REPL, press `]` to enter pkg mode, and execute:
