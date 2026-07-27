@@ -50,3 +50,24 @@ Pkg.add("WolfRiverPlots")
 ```
 
 or from the Julia REPL, press `]` to enter pkg mode, and execute:
+
+
+```
+add WolfRiverPlots
+```
+
+For the most recent (development) version, use:
+```
+using Pkg
+Pkg.add(url = "https://github.com/senresearch/WolfRiverPlots.jl", rev="main")
+```
+
+## Contributing
+
+We welcome contributions that improve documentation, performance, testing, and functionality. 
+Users can contribute by opening an issue or submitting a pull request.
+
+## Questions
+
+If you have questions about contributing or using `WolfRiverPlots` package, please communicate with the authors via GitHub.
+
